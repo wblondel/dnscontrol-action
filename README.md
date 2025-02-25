@@ -24,7 +24,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: DNSControl check
         uses: wblondel/dnscontrol-action@v4
@@ -51,7 +51,7 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: DNSControl preview
         uses: wblondel/dnscontrol-action@v4
@@ -94,20 +94,19 @@ Done. 6 corrections.
 
 Provided that your GitHub Action job for 'preview' has an id
 `dnscontrol_preview`, you could use the following snippet to enable pull request
-comments using Unsplash's [comment-on-pr](https://github.com/unsplash/comment-on-pr)
+comments using the
+[thollander/actions-comment-pull-request](https://github.com/thollander/actions-comment-pull-request)
 GitHub Action.
 
 ```yaml
 - name: Preview pull request comment
-  uses: unsplash/comment-on-pr@v1.3.0
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  uses: thollander/actions-comment-pull-request@v3
   with:
-    msg: |
+    message: |
       ```
       ${{ steps.dnscontrol_preview.outputs.preview_comment }}
       ```
-    check_for_duplicate_msg: true
+    comment-tag: dnscontrol-preview  # Update existing comment instead of creating a new one
 ```
 
 ### push
@@ -131,7 +130,7 @@ jobs:
   push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: DNSControl push
         uses: wblondel/dnscontrol-action@v4

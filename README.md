@@ -24,15 +24,15 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: DNSControl check
-        uses: wblondel/dnscontrol-action@v4
+        uses: wblondel/dnscontrol-action@v4.18.0 # replace the version tag with the commit-hash for better security
         with:
           args: check
 
-          # Optionally, if your DNSConfig files are in a non-default location,
-          # you could specify the paths to the config and credentials file.
+          # Optionally, if your DNSConfig config file is in a non-default location,
+          # you could specify the path to it.
           config_file: 'dns/dnsconfig.js'
 ```
 
@@ -50,14 +50,18 @@ on: pull_request
 jobs:
   preview:
     runs-on: ubuntu-latest
+    env:
+      DESEC_API_TOKEN: ${{ secrets.DESEC_API_TOKEN }}
+      OVH_APP_KEY: ${{ secrets.OVH_APP_KEY }}
+      OVH_APP_SECRET_KEY: ${{ secrets.OVH_APP_SECRET_KEY }}
+      OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: DNSControl preview
-        uses: wblondel/dnscontrol-action@v4
+        uses: wblondel/dnscontrol-action@v4.18.0 # replace the version tag with the commit-hash for better security
         id: dnscontrol_preview
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
         with:
           args: preview
 
@@ -78,28 +82,14 @@ command is published as a comment to the pull request for the branch containing 
 changes. This saves you several clicks through the menus to get to the output logs
 for the preview job.
 
-```
- ******************** Domain: example.com
------ Getting nameservers from: cloudflare
------ DNS Provider: cloudflare...6 corrections
-#1: CREATE record: @ TXT 1 v=spf1 include:_spf.google.com -all
-#2: CREATE record: @ MX 1 1  aspmx.l.google.com.
-#3: CREATE record: @ MX 1 5  alt1.aspmx.l.google.com.
-#4: CREATE record: @ MX 1 5  alt2.aspmx.l.google.com.
-#5: CREATE record: @ MX 1 10  alt3.aspmx.l.google.com.
-#6: CREATE record: @ MX 1 10  alt4.aspmx.l.google.com.
------ Registrar: none...0 corrections
-Done. 6 corrections.
-```
-
 Provided that your GitHub Action job for 'preview' has an id
 `dnscontrol_preview`, you could use the following snippet to enable pull request
 comments using Unsplash's [comment-on-pr](https://github.com/unsplash/comment-on-pr)
 GitHub Action.
 
 ```yaml
-- name: Preview pull request comment
-  uses: unsplash/comment-on-pr@v1.3.0
+- name: Comment diff on PR
+  uses: unsplash/comment-on-pr@ffe8f97ccc63ce12c3c23c6885b169db67958d3b # v1.3.0
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   with:
@@ -107,7 +97,7 @@ GitHub Action.
       ```
       ${{ steps.dnscontrol_preview.outputs.preview_comment }}
       ```
-    check_for_duplicate_msg: true
+    check_for_duplicate_msg: false
 ```
 
 ### push
@@ -130,13 +120,17 @@ on:
 jobs:
   push:
     runs-on: ubuntu-latest
+    env:
+      DESEC_API_TOKEN: ${{ secrets.DESEC_API_TOKEN }}
+      OVH_APP_KEY: ${{ secrets.OVH_APP_KEY }}
+      OVH_APP_SECRET_KEY: ${{ secrets.OVH_APP_SECRET_KEY }}
+      OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: DNSControl push
-        uses: wblondel/dnscontrol-action@v4
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        uses: wblondel/dnscontrol-action@v4.18.0 # replace the version tag with the commit-hash for better security
         with:
           args: push
 
@@ -156,14 +150,22 @@ instead. These encrypted secrets are exposed at runtime as environment variables
 See the DNSControl [Service Providers](https://stackexchange.github.io/dnscontrol/provider-list)
 documentation for details.
 
-To follow the Cloudflare example, add an encrypted secret named `CLOUDFLARE_API_TOKEN`
-and then define the `creds.json` file as follows.
+You could define the `creds.json` file as follows, and create the relevant encrypted secrets in your repository.
 
 ```json
 {
-  "cloudflare":{
-    "TYPE": "CLOUDFLAREAPI",
-    "apitoken": "$CLOUDFLARE_API_TOKEN"
+  "ovh": {
+    "TYPE": "OVH",
+    "app-key": "$OVH_APP_KEY",
+    "app-secret-key": "$OVH_APP_SECRET_KEY",
+    "consumer-key": "$OVH_CONSUMER_KEY"
+  },
+  "desec": {
+    "TYPE": "DESEC",
+    "auth-token": "$DESEC_API_TOKEN"
+  },
+  "none": {
+    "TYPE": "NONE"
   }
 }
 ```
@@ -183,7 +185,8 @@ file with the following contents:
 ```yaml
 version: 2
 updates:
-  # Maintain dependencies for GitHub Actions
+
+  # Set update schedule for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

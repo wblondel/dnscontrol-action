@@ -24,10 +24,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: DNSControl check
-        uses: wblondel/dnscontrol-action@v4.18.0 # replace the version tag with the commit-hash for better security
+        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the commit-hash for better security
         with:
           args: check
 
@@ -57,10 +57,10 @@ jobs:
       OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: DNSControl preview
-        uses: wblondel/dnscontrol-action@v4.18.0 # replace the version tag with the commit-hash for better security
+        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the commit-hash for better security
         id: dnscontrol_preview
         with:
           args: preview
@@ -127,10 +127,10 @@ jobs:
       OVH_CONSUMER_KEY: ${{ secrets.OVH_CONSUMER_KEY }}
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: DNSControl push
-        uses: wblondel/dnscontrol-action@v4.18.0 # replace the version tag with the commit-hash for better security
+        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the commit-hash for better security
         with:
           args: push
 

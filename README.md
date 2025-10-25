@@ -82,23 +82,7 @@ command is published as a comment to the pull request for the branch containing 
 changes. This saves you several clicks through the menus to get to the output logs
 for the preview job.
 
-Provided that your GitHub Action job for 'preview' has an id
-`dnscontrol_preview`, you could use the following snippet to enable pull request
-comments using Unsplash's [comment-on-pr](https://github.com/unsplash/comment-on-pr)
-GitHub Action.
-
-```yaml
-- name: Comment diff on PR
-  uses: unsplash/comment-on-pr@ffe8f97ccc63ce12c3c23c6885b169db67958d3b # v1.3.0
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  with:
-    msg: |
-      ```
-      ${{ steps.dnscontrol_preview.outputs.preview_comment }}
-      ```
-    check_for_duplicate_msg: false
-```
+However, I do not recommend doing this, as all GitHub actions to comment on PRs are abandoned and / or have security issues.
 
 ### push
 

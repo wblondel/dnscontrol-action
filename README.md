@@ -27,7 +27,7 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: DNSControl check
-        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the commit-hash for better security
+        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the latest version's commit-hash for better security
         with:
           args: check
 
@@ -60,7 +60,7 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: DNSControl preview
-        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the commit-hash for better security
+        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the latest version's commit-hash for better security
         id: dnscontrol_preview
         with:
           args: preview
@@ -114,7 +114,7 @@ jobs:
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: DNSControl push
-        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the commit-hash for better security
+        uses: wblondel/dnscontrol-action@v4.26.0 # replace the version tag with the latest version's commit-hash for better security
         with:
           args: push
 

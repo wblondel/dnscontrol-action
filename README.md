@@ -3,7 +3,7 @@
 ![](https://github.com/wblondel/dnscontrol-action/workflows/build/badge.svg)
 
 Deploy your DNS configuration using [GitHub Actions](https://github.com/actions)
-using [DNSControl](https://github.com/StackExchange/dnscontrol/).
+using [DNSControl](https://github.com/DNSControl/dnscontrol).
 
 ## Usage
 
@@ -131,7 +131,7 @@ be set. These secrets can be configured through a file named `creds.json`. You
 should **not** add secrets as plaintext to this file, but use GitHub
 Actions [encrypted secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
 instead. These encrypted secrets are exposed at runtime as environment variables.
-See the DNSControl [Service Providers](https://stackexchange.github.io/dnscontrol/provider-list)
+See the DNSControl [Service Providers](https://docs.dnscontrol.org/provider/index)
 documentation for details.
 
 You could define the `creds.json` file as follows, and create the relevant encrypted secrets in your repository.

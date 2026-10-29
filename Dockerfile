@@ -1,4 +1,4 @@
-FROM dnscontrol/dnscontrol:5.3.0
+FROM dnscontrol/dnscontrol:5.7.1
 
 LABEL repository="https://github.com/wblondel/dnscontrol-action"
 LABEL maintainer="William Gérald Blondel <contact@williamblondel.fr>"
